@@ -35,7 +35,8 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Document Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-2">Document Dashboard</h1>
+      <p className="text-gray-600 mb-8">Upload, preview, and track the status of your signed documents in one place.</p>
 
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
@@ -46,28 +47,28 @@ const Dashboard = () => {
       <FileUploadZone onUploadSuccess={handleUploadSuccess} />
 
       <div className="mt-8">
-        <div className="flex gap-4 mb-6">
+        <div className="flex flex-wrap gap-4 mb-6">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 rounded w-full sm:w-auto ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
           >
             All Documents
           </button>
           <button
             onClick={() => setFilter('pending')}
-            className={`px-4 py-2 rounded ${filter === 'pending' ? 'bg-yellow-600 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 rounded w-full sm:w-auto ${filter === 'pending' ? 'bg-yellow-600 text-white' : 'bg-gray-200'}`}
           >
             Pending
           </button>
           <button
             onClick={() => setFilter('signed')}
-            className={`px-4 py-2 rounded ${filter === 'signed' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 rounded w-full sm:w-auto ${filter === 'signed' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}
           >
             Signed
           </button>
           <button
             onClick={() => setFilter('rejected')}
-            className={`px-4 py-2 rounded ${filter === 'rejected' ? 'bg-red-600 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 rounded w-full sm:w-auto ${filter === 'rejected' ? 'bg-red-600 text-white' : 'bg-gray-200'}`}
           >
             Rejected
           </button>
