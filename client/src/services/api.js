@@ -33,6 +33,7 @@ export const documentAPI = {
   },
   getDocuments: () => api.get('/documents'),
   getDocument: (id) => api.get(`/documents/${id}`),
+  generateSignedPdf: (id) => api.post(`/documents/${id}/generate`),
   downloadDocument: (id) => api.get(`/documents/${id}/download`),
 };
 

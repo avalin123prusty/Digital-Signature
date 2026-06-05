@@ -15,6 +15,7 @@ const DocumentViewer = () => {
   const [numPages, setNumPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [showAudit, setShowAudit] = useState(false);
+  const [generationMessage, setGenerationMessage] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -41,6 +42,16 @@ const DocumentViewer = () => {
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+  };
+
+  const handleGenerateSignedPdf = async () => {
+    try {
+      const response = await documentAPI.generateSignedPdf(id);
+      setGenerationMessage(response.data.message || 'Signed PDF generated successfully');
+      await fetchData();
+    } catch (err) {
+      setError('Failed to generate signed PDF');
+    }
   };
 
   const handleSignature = async (signatureData) => {
@@ -106,9 +117,18 @@ const DocumentViewer = () => {
             <p className="text-sm text-gray-600 mb-2">
               <strong>Uploaded:</strong> {new Date(document.uploadedAt).toLocaleDateString()}
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 mb-4">
               <strong>Signatures:</strong> {signatures.length}
             </p>
+            <button
+              onClick={handleGenerateSignedPdf}
+              className="btn-primary w-full"
+            >
+              Generate Signed PDF
+            </button>
+            {generationMessage && (
+              <p className="mt-3 text-sm text-green-600">{generationMessage}</p>
+            )}
           </div>
 
           <div className="card">
