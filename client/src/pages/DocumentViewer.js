@@ -141,6 +141,9 @@ const DocumentViewer = () => {
                   <li key={sig._id} className="text-sm border-b pb-2">
                     <p className="font-semibold">{sig.signerEmail}</p>
                     <p className="text-gray-600">Status: {sig.status}</p>
+                    {sig.reason && (
+                      <p className="text-sm text-red-600">Reason: {sig.reason}</p>
+                    )}
                     {sig.signedAt && (
                       <p className="text-gray-600">
                         Signed: {new Date(sig.signedAt).toLocaleDateString()}
