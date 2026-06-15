@@ -4,6 +4,7 @@ const PDFEditor = ({ documentPath, onSignature, signatures, currentPage, numPage
   const [isDrawing, setIsDrawing] = useState(false);
   const [signatureMode, setSignatureMode] = useState(null); // 'draw', 'type', null
   const [signatureText, setSignatureText] = useState('');
+  const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
 
   const handleCanvasMouseDown = (e) => {
@@ -18,6 +19,7 @@ const PDFEditor = ({ documentPath, onSignature, signatures, currentPage, numPage
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.moveTo(x, y);
+    setLastPos({ x, y });
   };
 
   const handleCanvasMouseMove = (e) => {
@@ -31,6 +33,7 @@ const PDFEditor = ({ documentPath, onSignature, signatures, currentPage, numPage
     const ctx = canvas.getContext('2d');
     ctx.lineTo(x, y);
     ctx.stroke();
+    setLastPos({ x, y });
   };
 
   const handleCanvasMouseUp = () => {
@@ -41,10 +44,15 @@ const PDFEditor = ({ documentPath, onSignature, signatures, currentPage, numPage
     const canvas = canvasRef.current;
     const signatureImage = canvas.toDataURL();
 
+    // compute relative coordinates as percentages so server can map to PDF
+    const rect = canvas.getBoundingClientRect();
+    const relX = Math.round((lastPos.x / rect.width) * 10000) / 10000; // 4 decimal places
+    const relY = Math.round((lastPos.y / rect.height) * 10000) / 10000;
+
     onSignature({
       coordinates: {
-        x: 100,
-        y: 100,
+        x: relX,
+        y: relY,
         page: currentPage,
       },
       signatureImage,
