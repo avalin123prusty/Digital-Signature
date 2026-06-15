@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import DocumentViewer from './pages/DocumentViewer';
+import PublicSign from './pages/PublicSign';
 
 import './index.css';
 
@@ -38,6 +39,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/public/sign/:token" element={<PublicSign />} />
           </Routes>
         </div>
       </AuthProvider>

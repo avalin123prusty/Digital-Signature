@@ -41,6 +41,8 @@ export const signatureAPI = {
   saveSignature: (data) => api.post('/signatures', data),
   getSignatures: (documentId) => api.get(`/signatures/${documentId}`),
   updateSignatureStatus: (signatureId, data) => api.patch(`/signatures/${signatureId}`, data),
+  publicSign: (token, data) => api.post(`/signatures/public/${token}`, data),
+  getPublicInfo: (token) => api.get(`/signatures/public/${token}`),
 };
 
 export const auditAPI = {
