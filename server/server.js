@@ -31,6 +31,11 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/signatures', signatureRoutes);
 app.use('/api/audit', auditRoutes);
 
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // Serve client build if available (for single-repo deploys)
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -44,11 +49,6 @@ if (fs.existsSync(clientBuildPath)) {
     res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
-
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'Backend is running' });
-});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
